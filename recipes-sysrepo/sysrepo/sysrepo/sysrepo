@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# Source function library.
+. /etc/init.d/functions
+
+EXEC_PATH="/usr/bin"
+SYSREPOD_EXEC="sysrepod"
+SYSREPOPLUGIND_EXEC="sysrepo-plugind"
+SERVER_OPTS=" -d -l 0 "
+
+init_sysrepo() {
+    if [ -x /usr/bin/sysrepoctl ]; then
+        if [ -f /usr/share/yang/install-yang.sh ]; then
+            sh /usr/share/yang/install-yang.sh > /dev/null
+        fi
+        touch /etc/sysrepo/init
+    fi
+}
+
+
+case "$1" in
+    start)
+        test -r /etc/sysrepo/init || init_sysrepo
+        start-stop-daemon --start --exec "$EXEC_PATH/$SYSREPOD_EXEC" -- "$SERVER_OPTS"
+        start-stop-daemon --start --exec "$EXEC_PATH/$SYSREPOPLUGIND_EXEC" -- "$SERVER_OPTS"
+        ;;
+    stop)
+        start-stop-daemon --stop --quiet --exec "$EXEC_PATH/$SYSREPOPLUGIND_EXEC"
+        start-stop-daemon --stop --quiet --exec "$EXEC_PATH/$SYSREPOD_EXEC"
+        ;;
+    status)
+        status $SYSREPOD_EXEC
+        status $SYSREPOPLUGIND_EXEC
+        ;;
+    reload)
+        echo "not supported"
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status|restart}"
+        exit 1;;
+esac
+
+
+exit 0
+

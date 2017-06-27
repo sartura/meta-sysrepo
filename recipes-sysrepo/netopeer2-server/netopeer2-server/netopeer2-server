@@ -1,0 +1,107 @@
+#!/bin/sh
+
+# Source function library.
+. /etc/init.d/functions
+
+EXEC_PATH="/usr/bin"
+SERVER_EXEC="netopeer2-server"
+SERVER_OPTS=" -d -v 0 "
+
+init_keystored() {
+    if [ -x /usr/bin/sysrepoctl ]; then
+        match=$(sysrepoctl -l | grep "ietf-keystore\ ")
+        if [ ! "$match" ]; then
+            sysrepoctl --install --yang=/etc/sysrepo/yang/ietf-keystore.yang -o root:root -p 600
+            if [ -x /usr/bin/sysrepocfg ]; then
+                sysrepocfg -d startup -i /usr/share/netopeer2-keystored/stock_key_config.xml ietf-keystore
+                #rm /usr/share/netopeer2-keystored/stock_key_config.xml
+            fi
+
+            #generate ssh keys
+            ssh-keygen -t rsa -f /tmp/ssh_host_rsa_key -N ""
+            openssl rsa -in /tmp/ssh_host_rsa_key -outform pem > /etc/keystored/keys/ssh_host_rsa_key.pem
+            openssl rsa -pubout -in /etc/keystored/keys/ssh_host_rsa_key.pem -out /etc/keystored/keys/ssh_host_rsa_key.pub.pem
+            rm /tmp/ssh_host_rsa_key
+        fi
+        
+        touch /etc/netopeer2/keystored
+    fi
+}
+
+init_server() {
+    if [ -x /usr/bin/sysrepoctl ]; then
+        match=$(sysrepoctl -l | grep "ietf-ssh-server\ ")
+        if [ ! "$match" ]; then
+            sysrepoctl --install --yang=/etc/sysrepo/yang/ietf-ssh-server.yang -o root:root -p 600
+        fi
+
+        match=$(sysrepoctl -l | grep "ietf-tls-server\ ")
+        if [ ! "$match" ]; then
+            sysrepoctl --install --yang=/etc/sysrepo/yang/ietf-tls-server.yang -o root:root -p 600
+        fi
+
+        match=$(sysrepoctl -l | grep "iana-crypt-hash\ ")
+        if [ ! "$match" ]; then
+            sysrepoctl --install --yang=/etc/sysrepo/yang/iana-crypt-hash.yang -o root:root -p 600
+        fi
+
+        match=$(sysrepoctl -l | grep "ietf-x509-cert-to-name\ ")
+        if [ ! "$match" ]; then
+            sysrepoctl --install --yang=/etc/sysrepo/yang/ietf-x509-cert-to-name.yang -o root:root -p 600
+        fi
+
+        match=$(sysrepoctl -l | grep "ietf-netconf-server\ ")
+        if [ ! "$match" ]; then
+            sysrepoctl --install --yang=/etc/sysrepo/yang/ietf-netconf-server.yang -o root:root -p 600
+            sysrepoctl -m ietf-netconf-server -e listen
+            sysrepoctl -m ietf-netconf-server -e ssh-listen
+            sysrepoctl -m ietf-netconf-server -e tls-listen
+            sysrepoctl -m ietf-netconf-server -e call-home
+            sysrepoctl -m ietf-netconf-server -e ssh-call-home
+            sysrepoctl -m ietf-netconf-server -e tls-call-home
+            if [ -x /usr/bin/sysrepocfg ]; then
+                sysrepocfg -d startup -i /usr/share/netopeer2-server/stock_config.xml ietf-netconf-server
+                #rm /usr/share/netopeer2-server/stock_config.xml
+            fi
+        fi
+
+        match=$(sysrepoctl -l | grep "ietf-system\ ")
+        if [ ! "$match" ]; then
+            sysrepoctl --install --yang=/etc/sysrepo/yang/ietf-system.yang -o root:root -p 600
+            sysrepoctl -m ietf-system -e authentication
+            sysrepoctl -m ietf-system -e local-users
+        fi
+        
+        touch /etc/netopeer2/server
+    fi
+}
+
+
+case "$1" in
+    start)
+        /etc/init.d/sysrepo start
+        test -r /etc/netopeer2/keystored || init_keystored
+        test -r /etc/netopeer2/server || init_server
+        start-stop-daemon --start --exec "$EXEC_PATH/$SERVER_EXEC" -- "$SERVER_OPTS"
+        ;;
+    stop)
+        start-stop-daemon --stop --quiet --exec "$EXEC_PATH/$SERVER_EXEC"
+        ;;
+    status)
+        status $SERVER_EXEC
+        ;;
+    reload)
+        echo "not supported"
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|status|restart}"
+        exit 1;;
+esac
+
+
+exit 0
+

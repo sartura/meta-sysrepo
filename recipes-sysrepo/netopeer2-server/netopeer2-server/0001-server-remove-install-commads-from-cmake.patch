@@ -1,0 +1,20 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -149,6 +149,7 @@ include_directories(${SYSREPO_INCLUDE_DIRS})
+ # install binary
+ install(TARGETS netopeer2-server DESTINATION ${CMAKE_INSTALL_BINDIR})
+ 
++if(FALSE)
+ # only for configuration
+ if (ENABLE_CONFIGURATION)
+     # find sysrepoctl
+@@ -241,6 +242,7 @@ if (ENABLE_CONFIGURATION)
+ 
+         endif()")
+ endif()
++endif()
+ 
+ configure_file("${PROJECT_SOURCE_DIR}/config.h.in" "${PROJECT_SOURCE_DIR}/config.h" ESCAPE_QUOTES @ONLY)
+ 
+-- 
+
