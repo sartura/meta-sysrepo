@@ -77,3 +77,5 @@ It is enough to start only `/etc/init.d/netopeer2-server` script and it will mak
 /etc/init.d/netopeer2-server start
 ```
 
+## Demo
+[![asciicast](https://asciinema.org/a/126605.png)](https://asciinema.org/a/126605)
