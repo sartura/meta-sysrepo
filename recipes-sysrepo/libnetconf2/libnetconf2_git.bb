@@ -6,12 +6,12 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=b1f886606973edff74d729043d78afef"
 
 SRC_URI = "git://github.com/CESNET/libnetconf2.git;protocol=https"
 
-PV = "0.8.62+git${SRCPV}"
-SRCREV = "cc1b741c2133356ccf118d74a0d33aa0839f248e"
+PV = "1.1.3+git${SRCPV}"
+SRCREV = "73bbfab9986a6eeb18bbf2af76a59b90cb323777"
 
 S = "${WORKDIR}/git"
 
-DEPENDS = "libssh openssl libyang"
+DEPENDS = "libssh openssl libyang libxcrypt"
 
 inherit cmake pkgconfig
 

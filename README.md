@@ -7,12 +7,14 @@ Please see the corresponding sections below for details.
 ## Dependencies
 
 This layer depends on:
-* URI: git://git.openembedded.org/meta-openembedded 
-  branch: master
 
-It was tested with yocto project master branch:
+* URI: git://git.openembedded.org/meta-openembedded 
+* branch: zeus
+
+It was tested with yocto project zeus branch:
+
 * URI: git://git.yoctoproject.org/poky
-  branch: master
+* branch: zeus
 
 Build host dependencies:
 https://www.yoctoproject.org/docs/current/yocto-project-qs/yocto-project-qs.html#packages
@@ -22,9 +24,9 @@ https://www.yoctoproject.org/docs/current/yocto-project-qs/yocto-project-qs.html
 In order to use this layer, you need to make the build system aware of it.
 First prepare yocto project and all required layers:
 ```
-git clone git://git.yoctoproject.org/poky
+git clone git://git.yoctoproject.org/poky -b zeus
 cd poky
-git clone git://git.openembedded.org/meta-openembedded
+git clone git://git.openembedded.org/meta-openembedded -b zeus
 git clone https://github.com/sartura/meta-sysrepo
 source oe-init-build-env
 ```
@@ -36,7 +38,6 @@ BBLAYERS ?= " \
   /home/build/poky/meta-poky \
   /home/build/poky/meta-yocto-bsp \
   /home/build/poky/meta-sysrepo \
-  /home/build/poky/meta-openembedded/meta-efl \
   /home/build/poky/meta-openembedded/meta-initramfs \
   /home/build/poky/meta-openembedded/meta-multimedia \
   /home/build/poky/meta-openembedded/meta-networking \
@@ -47,8 +48,7 @@ BBLAYERS ?= " \
 
 Update `conf/local.conf` file to include additional software in the final image, e.g. add to the end:
 ```
-IMAGE_INSTALL_append = " sysrepo netopeer2-server netopeer2-cli \
-  netopeer2-keystored openssh openssl "
+IMAGE_INSTALL_append = " sysrepo netopeer2-server netopeer2-cli openssh openssl "
 ```
 Optionally, adapt `MACHINE` variable for target system.
 
@@ -63,7 +63,7 @@ The image is located under `tmp/deploy/images/<target>` directory.
 
 Default `MACHINE` target is `qemux86`, so it can be run with:
 ```
-runqemu qemux86
+runqemu qemux86-64
 ```
 
 ## Starting sysrepo and netopeer2-server

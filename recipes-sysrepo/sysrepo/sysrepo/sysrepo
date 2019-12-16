@@ -6,30 +6,30 @@
 EXEC_PATH="/usr/bin"
 SYSREPOD_EXEC="sysrepod"
 SYSREPOPLUGIND_EXEC="sysrepo-plugind"
-SERVER_OPTS=" -d -l 0 "
+SERVER_OPTS=" -d -v 1"
 
 init_sysrepo() {
     if [ -x /usr/bin/sysrepoctl ]; then
-        if [ -f /usr/share/yang/install-yang.sh ]; then
-            sh /usr/share/yang/install-yang.sh > /dev/null
-        fi
-        touch /etc/sysrepo/init
+        sh /etc/Netopeer2/scripts/setup.sh /usr/bin/sysrepoctl /etc/Netopeer2/modules root
     fi
+    if [ -x /usr/bin/sysrepocfg ]; then
+        sh /etc/Netopeer2/scripts/merge_hostkey.sh /usr/bin/sysrepocfg /usr/bin/openssl
+        sh /etc/Netopeer2/scripts/merge_config.sh /usr/bin/sysrepocfg genkey
+    fi
+    touch /etc/sysrepo/init
 }
 
 
 case "$1" in
     start)
         test -r /etc/sysrepo/init || init_sysrepo
-        start-stop-daemon --start --exec "$EXEC_PATH/$SYSREPOD_EXEC" -- "$SERVER_OPTS"
-        start-stop-daemon --start --exec "$EXEC_PATH/$SYSREPOPLUGIND_EXEC" -- "$SERVER_OPTS"
+        start-stop-daemon --start --background $EXEC_PATH/$SYSREPOPLUGIND_EXEC -- $SERVER_OPTS
         ;;
     stop)
-        start-stop-daemon --stop --quiet --exec "$EXEC_PATH/$SYSREPOPLUGIND_EXEC"
-        start-stop-daemon --stop --quiet --exec "$EXEC_PATH/$SYSREPOD_EXEC"
+        start-stop-daemon --stop --quiet --exec $EXEC_PATH/$SYSREPOPLUGIND_EXEC
+        rm -rf /var/run/sysrepo-subscriptions/*
         ;;
     status)
-        status $SYSREPOD_EXEC
         status $SYSREPOPLUGIND_EXEC
         ;;
     reload)

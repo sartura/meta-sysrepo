@@ -2,12 +2,12 @@
 SUMMARY = "YANG-based configuration and operational state data store for Unix/Linux applications."
 DESCRIPTION = ""
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=7df5a8706277b586ca000838046993d1"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=e3fc50a88d0a364313df4b21ef20c29e"
 
 SRC_URI = "git://github.com/sysrepo/sysrepo.git;protocol=https file://sysrepo"
 
-PV = "1.0+git${SRCPV}"
-SRCREV = "e01149730b043f8c8bf60f4a148ad79de0600a7d"
+PV = "1.3.21+git${SRCPV}"
+SRCREV = "bd46e7ce607e53fcd32c235bf3643cae39f1cfd0"
 
 S = "${WORKDIR}/git"
 
@@ -23,11 +23,13 @@ EXTRA_OECMAKE = " -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_BUILD_TYPE:String=Rel
 BBCLASSEXTEND = "native nativesdk" 
 
 do_install_append () {
-    rm -rf ${D}/var/run
-    cp -a ${B}/install-yang.sh ${D}/usr/share/yang/
-    sed -i -e '/shopt.*/d' ${D}/usr/share/yang/install-yang.sh
     install -d ${D}/etc/sysrepo/data/notifications
+    install -d ${D}/etc/sysrepo/yang
+    install -o root -g root ${S}/modules/ietf-netconf-notifications.yang ${D}/etc/sysrepo/yang/ietf-netconf-notifications@2012-02-06.yang
+    install -o root -g root ${S}/modules/ietf-netconf-with-defaults.yang ${D}/etc/sysrepo/yang/ietf-netconf-with-defaults@2011-06-01.yang
+    install -o root -g root ${S}/modules/ietf-netconf.yang ${D}/etc/sysrepo/yang/ietf-netconf@2011-06-01.yang
     install -d ${D}/etc/init.d
     install -m 0775 ${WORKDIR}/sysrepo ${D}/etc/init.d/
+    install -d ${D}/usr/lib/sysrepo/plugins
 }
 
