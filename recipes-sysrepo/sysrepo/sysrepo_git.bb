@@ -6,8 +6,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=e3fc50a88d0a364313df4b21ef20c29e"
 
 SRC_URI = "git://github.com/sysrepo/sysrepo.git;protocol=https file://sysrepo"
 
-PV = "1.3.21+git${SRCPV}"
-SRCREV = "bd46e7ce607e53fcd32c235bf3643cae39f1cfd0"
+PV = "1.4.80+git${SRCPV}"
+SRCREV = "8afd2e05cbc84ae16717d2718ff433c636673d7d"
 
 S = "${WORKDIR}/git"
 
@@ -15,7 +15,7 @@ DEPENDS = "libyang protobuf protobuf-c protobuf-c-native libredblack libev libne
 
 FILES_${PN} += "/usr/share/yang/* /run/sysrepo*"
 
-inherit cmake pkgconfig pythonnative python-dir
+inherit cmake pkgconfig python3native python3-dir
 
 # Specify any options you want to pass to cmake using EXTRA_OECMAKE:
 EXTRA_OECMAKE = " -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_BUILD_TYPE:String=Release -DBUILD_EXAMPLES:String=False -DENABLE_TESTS:String=False -DREPOSITORY_LOC:PATH=/etc/sysrepo  -DCALL_TARGET_BINS_DIRECTLY=False -DGEN_LANGUAGE_BINDINGS:String=False "

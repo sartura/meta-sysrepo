@@ -2,12 +2,12 @@ SUMMARY = "libnetconf2 is a NETCONF library in C intended for building NETCONF c
 DESCRIPTION = "The library provides functions to connect NETCONF client and server to each other via SSH and to send, receive and process NETCONF messages."
 SECTION = "libs"
 LICENSE = "BSD-3-Clause"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=b1f886606973edff74d729043d78afef"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=08a5578c9bab06fb2ae84284630b973f"
 
 SRC_URI = "git://github.com/CESNET/libnetconf2.git;protocol=https"
 
-PV = "1.1.3+git${SRCPV}"
-SRCREV = "73bbfab9986a6eeb18bbf2af76a59b90cb323777"
+PV = "1.1.26+git${SRCPV}"
+SRCREV = "819598bdfafb09f9a8bb49e57c2d6d0aac5208b3"
 
 S = "${WORKDIR}/git"
 

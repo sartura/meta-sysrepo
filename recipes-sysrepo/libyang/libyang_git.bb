@@ -6,12 +6,14 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=2982272c97a8e417a844857ca0d303b1"
 
 SRC_URI = "git://github.com/CESNET/libyang.git;protocol=https"
 
-PV = "1.0.109+git${SRCPV}"
-SRCREV = "402ab07a16c108348efec51bf42b0b9a6ef85508"
+PV = "1.0.184+git${SRCPV}"
+SRCREV = "6defee4cab9e76bdd736bb3f751de396b4bf5a4b"
 
 S = "${WORKDIR}/git"
 
 DEPENDS = "libpcre"
+
+FILES_${PN} += "/usr/lib/libyang1/*"
 
 inherit cmake pkgconfig
 

@@ -9,12 +9,12 @@ Please see the corresponding sections below for details.
 This layer depends on:
 
 * URI: git://git.openembedded.org/meta-openembedded 
-* branch: zeus
+* branch: dunfell
 
-It was tested with yocto project zeus branch:
+It was tested with yocto project dunfell branch:
 
 * URI: git://git.yoctoproject.org/poky
-* branch: zeus
+* branch: dunfell
 
 Build host dependencies:
 https://www.yoctoproject.org/docs/current/yocto-project-qs/yocto-project-qs.html#packages
@@ -24,9 +24,9 @@ https://www.yoctoproject.org/docs/current/yocto-project-qs/yocto-project-qs.html
 In order to use this layer, you need to make the build system aware of it.
 First prepare yocto project and all required layers:
 ```
-git clone git://git.yoctoproject.org/poky -b zeus
+git clone git://git.yoctoproject.org/poky -b dunfell
 cd poky
-git clone git://git.openembedded.org/meta-openembedded -b zeus
+git clone git://git.openembedded.org/meta-openembedded -b dunfell
 git clone https://github.com/sartura/meta-sysrepo
 source oe-init-build-env
 ```
@@ -48,7 +48,7 @@ BBLAYERS ?= " \
 
 Update `conf/local.conf` file to include additional software in the final image, e.g. add to the end:
 ```
-IMAGE_INSTALL_append = " sysrepo netopeer2-server netopeer2-cli openssh openssl "
+IMAGE_INSTALL_append = " sysrepo netopeer2-server openssh openssl "
 ```
 Optionally, adapt `MACHINE` variable for target system.
 
@@ -78,4 +78,4 @@ It is enough to start only `/etc/init.d/netopeer2-server` script and it will mak
 ```
 
 ## Demo
-[![asciicast](https://asciinema.org/a/126605.png)](https://asciinema.org/a/126605)
+[![asciicast](https://asciinema.org/a/360926.svg)](https://asciinema.org/a/360926)

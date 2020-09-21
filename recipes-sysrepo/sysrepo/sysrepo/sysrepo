@@ -9,12 +9,16 @@ SYSREPOPLUGIND_EXEC="sysrepo-plugind"
 SERVER_OPTS=" -d -v 1"
 
 init_sysrepo() {
+    export NP2_MODULE_DIR="/usr/share/yang/modules/netopeer2"
+    export NP2_MODULE_PERMS="600"
+    export NP2_MODULE_OWNER="root"
+    export NP2_MODULE_GROUP="root"
     if [ -x /usr/bin/sysrepoctl ]; then
-        sh /etc/Netopeer2/scripts/setup.sh /usr/bin/sysrepoctl /etc/Netopeer2/modules root
+        sh /etc/netopeer2/scripts/setup.sh
     fi
     if [ -x /usr/bin/sysrepocfg ]; then
-        sh /etc/Netopeer2/scripts/merge_hostkey.sh /usr/bin/sysrepocfg /usr/bin/openssl
-        sh /etc/Netopeer2/scripts/merge_config.sh /usr/bin/sysrepocfg genkey
+        sh /etc/netopeer2/scripts/merge_hostkey.sh
+        sh /etc/netopeer2/scripts/merge_config.sh
     fi
     touch /etc/sysrepo/init
 }

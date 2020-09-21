@@ -13,7 +13,7 @@ S = "${WORKDIR}/git"
 # NOTE: if this software is not capable of being built in a separate build directory
 # from the source, you should replace autotools with autotools-brokensep in the
 # inherit line
-inherit pythonnative autotools
+inherit python3native autotools
 
 # Specify any options you want to pass to the configure script using EXTRA_OECONF:
 EXTRA_OECONF = " --without-rbgen "
