@@ -27,7 +27,7 @@ init_sysrepo() {
 case "$1" in
     start)
         test -r /etc/sysrepo/init || init_sysrepo
-        start-stop-daemon --start --background $EXEC_PATH/$SYSREPOPLUGIND_EXEC -- $SERVER_OPTS
+        start-stop-daemon --start --background --exec $EXEC_PATH/$SYSREPOPLUGIND_EXEC -- $SERVER_OPTS
         ;;
     stop)
         start-stop-daemon --stop --quiet --exec $EXEC_PATH/$SYSREPOPLUGIND_EXEC
