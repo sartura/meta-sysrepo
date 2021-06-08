@@ -4,10 +4,10 @@ SECTION = "libs"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=2982272c97a8e417a844857ca0d303b1"
 
-SRC_URI = "git://github.com/CESNET/libyang.git;protocol=https"
+SRC_URI = "git://github.com/CESNET/libyang.git;protocol=https;branch=libyang1"
 
 PV = "1.0.184+git${SRCPV}"
-SRCREV = "6defee4cab9e76bdd736bb3f751de396b4bf5a4b"
+SRCREV = "afbd6072d85b0d39e4ecd142fdd33117a0ca0192"
 
 S = "${WORKDIR}/git"
 
@@ -21,4 +21,3 @@ inherit cmake pkgconfig
 EXTRA_OECMAKE = " -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_BUILD_TYPE:String=Release "
 
 BBCLASSEXTEND = "native nativesdk"
-
