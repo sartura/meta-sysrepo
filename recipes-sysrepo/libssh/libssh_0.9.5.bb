@@ -16,7 +16,7 @@ inherit cmake
 PACKAGECONFIG ??=""
 PACKAGECONFIG[gssapi] = "-DWITH_GSSAPI=1, -DWITH_GSSAPI=0, krb5, "
 
-ARM_INSTRUCTION_SET_armv5 = "arm"
+ARM_INSTRUCTION_SET:armv5 = "arm"
 
 EXTRA_OECMAKE = " \
     -DWITH_GCRYPT=0 \
@@ -26,7 +26,7 @@ EXTRA_OECMAKE = " \
     -DLIB_SUFFIX=${@d.getVar('baselib').replace('lib', '')} \
     "
 
-do_configure_prepend () {
+do_configure:prepend () {
     # Disable building of examples
     sed -i -e '/add_subdirectory(examples)/s/^/#DONOTWANT/' ${S}/CMakeLists.txt \
         || bbfatal "Failed to disable examples"

@@ -1,19 +1,19 @@
 # Recipe created by recipetool
 SUMMARY = "YANG-based configuration and operational state data store for Unix/Linux applications."
 DESCRIPTION = ""
-LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://LICENSE;md5=e3fc50a88d0a364313df4b21ef20c29e"
+LICENSE = "BSD-3-Clause"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=ef345f161efb68c3836e6f5648b2312f"
 
-SRC_URI = "git://github.com/sysrepo/sysrepo.git;protocol=https file://sysrepo"
+SRC_URI = "git://github.com/sysrepo/sysrepo.git;protocol=https;branch=devel file://sysrepo"
 
-PV = "1.4.80+git${SRCPV}"
-SRCREV = "8afd2e05cbc84ae16717d2718ff433c636673d7d"
+PV = "2.2.6+git${SRCPV}"
+SRCREV = "bdf67e0c0164b9a2e806105a719d139e7300bdea"
 
 S = "${WORKDIR}/git"
 
 DEPENDS = "libyang protobuf protobuf-c protobuf-c-native libredblack libev libnetconf2"
 
-FILES_${PN} += "/usr/share/yang/* /run/sysrepo*"
+FILES:${PN} += "/usr/share/yang/* /usr/lib/sysrepo-plugind/*"
 
 inherit cmake pkgconfig python3native python3-dir
 
@@ -22,7 +22,7 @@ EXTRA_OECMAKE = " -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_BUILD_TYPE:String=Rel
 
 BBCLASSEXTEND = "native nativesdk" 
 
-do_install_append () {
+do_install:append () {
     install -d ${D}/etc/sysrepo/data/notifications
     install -d ${D}/etc/sysrepo/yang
     install -o root -g root ${S}/modules/ietf-netconf-notifications.yang ${D}/etc/sysrepo/yang/ietf-netconf-notifications@2012-02-06.yang

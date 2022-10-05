@@ -4,7 +4,6 @@
 . /etc/init.d/functions
 
 EXEC_PATH="/usr/bin"
-SYSREPOD_EXEC="sysrepod"
 SYSREPOPLUGIND_EXEC="sysrepo-plugind"
 SERVER_OPTS=" -d -v 1"
 

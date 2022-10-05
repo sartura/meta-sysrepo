@@ -4,14 +4,14 @@ SECTION = "libs"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=08a5578c9bab06fb2ae84284630b973f"
 
-SRC_URI = "git://github.com/CESNET/libnetconf2.git;protocol=https"
+SRC_URI = "git://github.com/CESNET/libnetconf2.git;protocol=https;branch=devel"
 
-PV = "1.1.26+git${SRCPV}"
-SRCREV = "819598bdfafb09f9a8bb49e57c2d6d0aac5208b3"
+PV = "2.1.23+git${SRCPV}"
+SRCREV = "9b7f03e050f38866275772de62c0b7a305e71268"
 
 S = "${WORKDIR}/git"
 
-DEPENDS = "libssh openssl libyang libxcrypt"
+DEPENDS = "libssh openssl libyang libxcrypt libpam"
 
 inherit cmake pkgconfig
 

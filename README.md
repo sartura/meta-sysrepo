@@ -9,24 +9,24 @@ Please see the corresponding sections below for details.
 This layer depends on:
 
 * URI: git://git.openembedded.org/meta-openembedded 
-* branch: dunfell
+* branch: honister
 
 It was tested with yocto project dunfell branch:
 
 * URI: git://git.yoctoproject.org/poky
-* branch: dunfell
+* branch: honister
 
 Build host dependencies:
-https://www.yoctoproject.org/docs/current/yocto-project-qs/yocto-project-qs.html#packages
+https://docs.yoctoproject.org/dev-manual/start.html#preparing-the-build-host
 
 ## Adding the layer to your build
 
 In order to use this layer, you need to make the build system aware of it.
 First prepare yocto project and all required layers:
 ```
-git clone git://git.yoctoproject.org/poky -b dunfell
+git clone git://git.yoctoproject.org/poky -b honister
 cd poky
-git clone git://git.openembedded.org/meta-openembedded -b dunfell
+git clone git://git.openembedded.org/meta-openembedded -b honister
 git clone https://github.com/sartura/meta-sysrepo
 source oe-init-build-env
 ```

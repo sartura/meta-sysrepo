@@ -3,7 +3,7 @@
 # Source function library.
 . /etc/init.d/functions
 
-EXEC_PATH="/usr/bin"
+EXEC_PATH="/usr/sbin"
 SERVER_EXEC="netopeer2-server"
 SERVER_OPTS=" -v 1"
 
