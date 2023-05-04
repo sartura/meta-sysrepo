@@ -8,7 +8,7 @@ SRC_URI += " file://0001-so-version.patch "
 FILESEXTRAPATHS:prepend := "${THISDIR}:"
 
 PV = "dev+git${SRCPV}"
-SRCREV = "6f98eaef59d4d197c2401b133e9b55105e382246"
+SRCREV = "20885de0d3bb95a05610fdb3a0f83d8f7c370fad"
 
 S = "${WORKDIR}/git"
 

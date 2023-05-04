@@ -9,12 +9,12 @@ Please see the corresponding sections below for details.
 This layer depends on:
 
 * URI: git://git.openembedded.org/meta-openembedded 
-* branch: honister
+* branch: kirkstone
 
-It was tested with yocto project dunfell branch:
+It was tested with yocto project kirkstone branch:
 
 * URI: git://git.yoctoproject.org/poky
-* branch: honister
+* branch: kirkstone
 
 Build host dependencies:
 https://docs.yoctoproject.org/dev-manual/start.html#preparing-the-build-host
@@ -24,9 +24,9 @@ https://docs.yoctoproject.org/dev-manual/start.html#preparing-the-build-host
 In order to use this layer, you need to make the build system aware of it.
 First prepare yocto project and all required layers:
 ```
-git clone git://git.yoctoproject.org/poky -b honister
+git clone git://git.yoctoproject.org/poky -b kirkstone
 cd poky
-git clone git://git.openembedded.org/meta-openembedded -b honister
+git clone git://git.openembedded.org/meta-openembedded -b kirkstone
 git clone https://github.com/sartura/meta-sysrepo
 source oe-init-build-env
 ```
@@ -48,10 +48,14 @@ BBLAYERS ?= " \
 
 Update `conf/local.conf` file to include additional software in the final image, e.g. add to the end:
 ```
-IMAGE_INSTALL_append = " sysrepo netopeer2-server openssh openssl "
+IMAGE_INSTALL:append = " sysrepo netopeer2-server openssh openssl "
 ```
 Optionally, adapt `MACHINE` variable for target system.
 
+Append "pam" to DISTRO_FEATURES, if needed
+```
+DISTRO_FEATURES += " pam"
+```
 ## Build test image
 
 Now a test image can be built, e.g.:
