@@ -6,8 +6,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=f3916d7d8d42a6508d0ea418cfff10ad"
 
 SRC_URI = "git://github.com/CESNET/libyang.git;protocol=https;branch=devel"
 
-PV = "2.0.256+git${SRCPV}"
-SRCREV = "56d4e07ef1cdeab3eb2e6700247f83ec9148edcc"
+PV = "2.1.77+git${SRCPV}"
+SRCREV = "a804113c9bbac3e36c53221be469c1ca5af5b435"
 
 S = "${WORKDIR}/git"
 

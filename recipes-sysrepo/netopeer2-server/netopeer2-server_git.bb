@@ -5,8 +5,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=41daedff0b24958b2eba4f9086d782e1"
 
 SRC_URI = "git://github.com/CESNET/Netopeer2.git;protocol=https;branch=devel file://netopeer2-server"
 
-PV = "2.1.38+git${SRCPV}"
-SRCREV = "3007b6f4c3052e4ba39f1956a6eab49388a3cc9b"
+PV = "2.1.59+git${SRCPV}"
+SRCREV = "b81788d9a81770313a0eb7f88d4224726b3d6e15"
 
 S = "${WORKDIR}/git"
 
